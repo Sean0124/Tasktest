@@ -240,7 +240,7 @@ func (c *Controller) syncHandler(key string) error {
 
 	// Finally, we update the status block of the Foo resource to reflect the
 	// current state of the world
-	err = c.updateFooStatus(foo)
+	err = c.updateTaskTestStatus(tasktest)
 	if err != nil {
 		return err
 	}
@@ -254,12 +254,13 @@ func (c *Controller) updateTaskTestStatus(tasktest *cloudclustersv1.TaskTest) er
 	// You can use DeepCopy() to make a deep copy of original object and modify this copy
 	// Or create a copy manually for better performance
 	tasktestCopy := tasktest.DeepCopy()
-	tasktestCopy.Status.TaskStauts = "successed" 
+	tasktestCopy.Status.TaskStatus = "successed"
 	// If the CustomResourceSubresources feature gate is not enabled,
 	// we must use Update instead of UpdateStatus to update the Status block of the Foo resource.
 	// UpdateStatus will not allow changes to the Spec of the resource,
 	// which is ideal for ensuring nothing other than resource status has been updated.
-	_, err := c.sampleclientset.SamplecontrollerV1alpha1().Foos(foo.Namespace).Update(fooCopy)
+	//_, err := c.sampleclientset.SamplecontrollerV1alpha1().Foos(foo.Namespace).Update(fooCopy)
+	_, err := c.tasktestclientset.CloudclustersV1().TaskTests(tasktest.Namespace).Update(tasktestCopy)
 	return err
 }
 
