@@ -88,6 +88,10 @@ func NewController(
 		UpdateFunc: func(old, new interface{}) {
 			oldTaskTest := old.(*cloudclustersv1.TaskTest)
 			newTaskTest := new.(*cloudclustersv1.TaskTest)
+			if oldTaskTest.Status.TaskStatus == "successed" {
+				glog.Info("%s/%s alreadly successed... ", oldTaskTest.Namespace,oldTaskTest.Name)
+				return
+			}
 			if oldTaskTest.ResourceVersion == newTaskTest.ResourceVersion {
 				// Periodic resync will send update events for all known TaskTests.
 				// Two different versions of the same TaskTest will always have different RVs.
@@ -206,6 +210,12 @@ func (c *Controller) syncHandler(key string) error {
 	// Get the TaskTest resource with this namespace/name
 	tasktest, err := c.tasktestsLister.TaskTests(namespace).Get(name)
 	if err != nil {
+		//判断task是否已经运行成功,成功则跳过
+		if tasktest.Status.TaskStatus == "successed" {
+			glog.Info("tasktest: %s/%s already successed ..", namespace, name)
+			return nil
+		}
+
 		// The TaskTest resource may no longer exist, in which case we stop
 		// processing.
 		if errors.IsNotFound(err) {
