@@ -28,6 +28,7 @@ type TaskTest struct {
 
 type TaskTestSpec struct {
 	TaskTest	string `json:"tasktesttest"`
+	Yaml		string `json:"yaml"`
 }
 
 type TaskTestStatus struct {
