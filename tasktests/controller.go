@@ -236,6 +236,12 @@ func (c *Controller) syncHandler(key string) error {
 		if err != nil {
 			glog.Info(err)
 		}
+	} else if tasktest.Spec.TaskTest == "deploy" {
+		glog.Info("Try to process deloy...")
+		err = create_yaml(tasktest.Spec.Yaml)
+		if err != nil {
+			glog.Info(err)
+		}
 	}
 
 	// FIX ME: Do diff().
