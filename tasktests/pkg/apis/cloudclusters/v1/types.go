@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -29,6 +28,7 @@ type TaskTest struct {
 
 type TaskTestSpec struct {
 	TaskTest	string `json:"tasktesttest"`
+	Yaml		string `json:"yaml"`
 }
 
 type TaskTestStatus struct {

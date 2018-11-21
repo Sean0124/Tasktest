@@ -228,6 +228,13 @@ func (c *Controller) syncHandler(key string) error {
 
 	glog.Infof("[Neutron] Try to process tasktest: %#v ...", tasktest)
 
+	if tasktest.Spec.TaskTest == "backup" {
+		glog.Info("Try to process backup...")
+	} else if tasktest.Spec.TaskTest == "delete" {
+		glog.Info("Try to process delete...")
+		delete_yaml(tasktest.Spec.Yaml)
+	}
+
 	// FIX ME: Do diff().
 	//
 	// actualTaskTest, exists := neutron.Get(namespace, name)
