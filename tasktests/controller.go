@@ -232,7 +232,10 @@ func (c *Controller) syncHandler(key string) error {
 		glog.Info("Try to process backup...")
 	} else if tasktest.Spec.TaskTest == "delete" {
 		glog.Info("Try to process delete...")
-		delete_yaml(tasktest.Spec.Yaml)
+		err = delete_yaml(tasktest.Spec.Yaml)
+		if err != nil {
+			glog.Info(err)
+		}
 	}
 
 	// FIX ME: Do diff().
