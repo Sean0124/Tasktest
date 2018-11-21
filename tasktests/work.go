@@ -8,7 +8,8 @@ import (
 func delete_yaml(yaml string) (err error)  {
 	cmd := exec.Command("kubectl","delete", "-f", yaml)
 	glog.Info(cmd)
-	err = cmd.Run()
+	result,err := cmd.CombinedOutput()
+	glog.Info(result)
 	return err
 }
 
@@ -16,6 +17,7 @@ func delete_yaml(yaml string) (err error)  {
 func create_yaml(yaml string) (err error)  {
 	cmd := exec.Command("kubectl","create", "-f", yaml)
 	glog.Info(cmd)
-	err = cmd.Run()
+	result,err := cmd.CombinedOutput()
+	glog.Info(result)
 	return err
 }
